@@ -3,16 +3,6 @@ uint16_t yaw_data, yaw_lsb, yaw_msb;
 float yaw;
 
 void BNO080_DMA_init(){
-	HAL_UART_Receive_DMA(&huart1, msg_buffer, 50);
-}
-
-void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
-{
-  HAL_GPIO_TogglePin(LED_GPIO_Port,LED_Pin);
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) 
-{
 	for(int i=0; i<50; i++){
 		if(msg_buffer[i]==0xAA && msg_buffer[i+1]==0xAA){
 			yaw_lsb		= msg_buffer[i+3];
@@ -28,4 +18,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		}
 	}
 	HAL_UART_Receive_DMA(&huart1, msg_buffer, 50);
+}
+
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+{
+  HAL_GPIO_TogglePin(LED_GPIO_Port,LED_Pin);
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) 
+{
+	BNO080_DMA_init();
 }
