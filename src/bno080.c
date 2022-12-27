@@ -1,5 +1,3 @@
-#include "GlobalVariables.h"
-
 uint8_t msg_buffer[50] = {0};
 uint16_t yaw_data, yaw_lsb, yaw_msb;
 float yaw;
@@ -21,10 +19,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			yaw_msb		= msg_buffer[i+4];
 			yaw_data	= yaw_msb<<8 | yaw_lsb;
 			if(yaw_data>=0xB9B0){
-				yaw			= 360 + (((int)yaw_data - 0xFFFF) / 100);
+				yaw = 360 + ((yaw_data - 0xFFFF) / 100.00);
 			}
 			else{
-				yaw			= yaw_data / 100;
+				yaw = yaw_data / 100.00;
 			}
 			break;
 		}
