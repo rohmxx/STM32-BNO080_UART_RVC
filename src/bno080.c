@@ -22,7 +22,7 @@ void BNO080_DMA_init(){
 
 void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 {
-  HAL_GPIO_TogglePin(LED_GPIO_Port,LED_Pin);
+	HAL_GPIO_TogglePin(LED_GPIO_Port,LED_Pin);
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) 
